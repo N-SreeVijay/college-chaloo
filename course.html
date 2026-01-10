@@ -462,6 +462,19 @@
         </div>
     </div>
 
+    <!-- DETAIL MODAL -->
+    <div id="detail-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+        <div
+            style="background: white; width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; border-radius: 20px; padding: 40px; position: relative;">
+            <button onclick="closeModal()"
+                style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 24px; cursor: none;">✕</button>
+            <div id="modal-content-inner">
+                <!-- Content injected here -->
+            </div>
+        </div>
+    </div>
+
     <script>
         // DATA STORE
         const db = {
@@ -473,12 +486,39 @@
                 eligibility: "10+2 (PCM) > 60%",
                 seats: "1200+",
                 streams: [
-                    { name: "Computer Science (CSE)", icon: "💻", desc: "Master algorithms, AI, and full-stack development." },
-                    { name: "Electronics (ECE)", icon: "📡", desc: "Design microchips, communication systems, and IoT devices." },
-                    { name: "Mechanical Engg", icon: "⚙️", desc: "The evergreen branch dealing with thermodynamics and robotics." },
-                    { name: "Civil Engineering", icon: "🏗️", desc: "Build the world with structural engineering and construction." },
-                    { name: "Information Tech", icon: "☁️", desc: "Focus on software systems, cloud computing, and data management." },
-                    { name: "Biotechnology", icon: "🧬", desc: "Merge biology with technology for healthcare solutions." }
+                    {
+                        name: "School of Computing",
+                        icon: "💻",
+                        subCategories: [
+                            { name: "CSE", courses: ["AI & ML", "Cyber Security", "Data Science", "Cloud Computing", "Software Engineering"] },
+                            { name: "ACSE", courses: ["AI & ML", "Cyber Security", "Data Science", "Internet of Things"] },
+                            { name: "Computer Science and Business", courses: ["Business Analytics", "Enterprise systems", "Financial Tech"] }
+                        ],
+                        desc: "CSE, ACSE offer specialized tracks in AI, Cyber Security, and more."
+                    },
+                    {
+                        name: "School of Electronics",
+                        icon: "📡",
+                        subCategories: [
+                            { name: "ECE", courses: ["VLSI Design", "Embedded Systems", "Signal Processing"] },
+                            { name: "EEE", courses: ["Power Systems", "Control Engineering", "Renewable Energy"] }
+                        ],
+                        desc: "Advanced electronics and electrical engineering programs."
+                    },
+                    {
+                        name: "Bio technology",
+                        icon: "🧬",
+                        subCategories: [
+                            { name: "Bio Tech", courses: ["Genetic Engineering", "Microbiology"] },
+                            { name: "Bio Informatics", courses: ["Computational Biology", "Genomics"] },
+                            { name: "Food Tech", courses: ["Food Processing", "Nutrition Science"] },
+                            { name: "Bio Medical", courses: ["Medical Imaging", "Biomaterials"] }
+                        ],
+                        desc: "Interdisciplinary programs merging biology with advanced technology."
+                    },
+                    { name: "Mechanical Engg", icon: "⚙️", desc: "The evergreen branch dealing with thermodynamics and robotics.", subCategories: [] },
+                    { name: "Civil Engineering", icon: "🏗️", desc: "Build the world with structural engineering and construction.", subCategories: [] },
+                    { name: "Information Tech", icon: "☁️", desc: "Focus on software systems, cloud computing, and data management.", subCategories: [] }
                 ]
             },
             mtech: {
@@ -691,12 +731,12 @@
 
                 const grid = document.getElementById('streams-grid');
                 if (data.streams.length > 0) {
-                    grid.innerHTML = data.streams.map(stream => `
+                    grid.innerHTML = data.streams.map((stream, index) => `
                         <div class="stream-card">
                             <div class="stream-icon">${stream.icon}</div>
                             <h3>${stream.name}</h3>
                             <p>${stream.desc}</p>
-                            <a href="#" class="apply-btn">View Details</a>
+                            <a href="javascript:void(0)" class="apply-btn" onclick="showSubDetails(${index})">View Details</a>
                         </div>
                     `).join('');
                 } else {
@@ -743,6 +783,41 @@
                 // Search Listener
                 searchInput.addEventListener('input', (e) => renderColleges(e.target.value));
 
+                // Modal Functions
+                window.showSubDetails = function (index) {
+                    const stream = data.streams[index];
+                    const modal = document.getElementById('detail-modal');
+                    const inner = document.getElementById('modal-content-inner');
+
+                    if (!stream.subCategories || stream.subCategories.length === 0) {
+                        alert("Details for " + stream.name + " are coming soon!");
+                        return;
+                    }
+
+                    inner.innerHTML = `
+                        <h2 style="margin-bottom: 30px; color: #2563eb;">${stream.name} - Specializations</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                            ${stream.subCategories.map(sub => `
+                                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                                    <h3 style="margin-bottom: 15px; color: #1e293b; border-bottom: 2px solid #0891b2; padding-bottom: 5px; display: inline-block;">${sub.name}</h3>
+                                    <ul style="list-style: none; padding-left: 0;">
+                                        ${sub.courses.map(course => `
+                                            <li style="margin-bottom: 8px; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                                                <span style="color: #0891b2;">▹</span> ${course}
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                    modal.style.display = 'flex';
+                };
+
+                window.closeModal = function () {
+                    document.getElementById('detail-modal').style.display = 'none';
+                };
 
                 // Attach hover listeners for new elements
                 setTimeout(() => {

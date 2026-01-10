@@ -261,7 +261,7 @@ const Home = () => {
                 <div className="topics-grid">
                     <div className="topic-card">
                         <div className="topic-icon bg-blue"><svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M16 18l6-6-6-6" /><path d="M8 6l-6 6 6 6" /></svg></div>
-                        <div className="topic-title">Computer Science</div><div className="topic-count">120+ Courses</div>
+                        <div className="topic-title">School of Computing</div><div className="topic-count">120+ Courses</div>
                     </div>
                     <div className="topic-card">
                         <div className="topic-icon bg-green"><svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10" /><line x1="18" y1="20" x2="18" y2="4" /><line x1="6" y1="20" x2="6" y2="16" /></svg></div>
