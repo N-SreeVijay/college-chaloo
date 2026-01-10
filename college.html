@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Details - EduMon</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-dark: #f0f9ff;
+            --bg-card: #ffffff;
+            --text-light: #1e293b;
+            --text-muted: #64748b;
+            --accent-cyan: #0891b2;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: none;
+            /* Custom cursor */
+        }
+
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(8, 145, 178, 0.5);
+            transition: all 0.2s ease-out;
+        }
+
+        body.hovering .cursor-outline {
+            width: 70px;
+            height: 70px;
+            background: rgba(8, 145, 178, 0.1);
+        }
+
+        /* HEADER (Simplified for Inner Page) */
+        header {
+            background: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--primary);
+        }
+
+        /* COLLEGE HERO */
+        .clg-hero {
+            background: white;
+            padding: 40px 80px;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .clg-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            object-fit: contain;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+        }
+
+        .clg-info h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .clg-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .clg-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-apply {
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-apply:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-brochure {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-brochure:hover {
+            background: #eff6ff;
+        }
+
+        /* NAVIGATION TABS */
+        .page-nav {
+            background: white;
+            padding: 0 80px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .page-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .page-nav li {
+            padding: 20px 0;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .page-nav li.active {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* CONTENT LAYOUT */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            /* Main Content + Sidebar */
+            gap: 40px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        /* DATA TABLE */
+        .fees-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .fees-table th,
+        .fees-table td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .fees-table th {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 14px;
+            background: #f8fafc;
+        }
+
+        .fees-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .course-name {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        /* SIDEBAR */
+        .sidebar .widget {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .widget h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .stat-row strong {
+            color: var(--text-light);
+        }
+
+        .stat-row span {
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="index.html" class="brand">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                    d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2 .715V17a1 1 0 001 1z">
+                </path>
+            </svg>
+            EduMon
+        </a>
+        <a href="javascript:history.back()" class="back-btn">← Back to Search</a>
+    </header>
+
+    <!-- HERO PROFILE -->
+    <div class="clg-hero">
+        <img id="clg-logo" src="https://via.placeholder.com/120" alt="Logo" class="clg-logo">
+        <div class="clg-info">
+            <h1 id="clg-name">Loading College...</h1>
+            <div class="clg-meta">
+                <span id="clg-loc">📍 Location</span>
+                <span id="clg-rating">⭐ 0.0</span>
+                <span id="clg-est">🏛️ Estd. 1999</span>
+                <span id="clg-type">🎓 Private</span>
+            </div>
+            <div class="action-buttons">
+                <a href="#" class="btn-apply">Apply Now</a>
+                <a href="#" class="btn-brochure">Download Brochure</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <nav class="page-nav">
+        <ul>
+            <li class="active">Info</li>
+            <li>Courses & Fees</li>
+            <li>Placements</li>
+            <li>Reviews</li>
+            <li>Gallery</li>
+        </ul>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="container">
+
+        <!-- LEFT COLUMN -->
+        <div class="main-content">
+
+            <div class="section-card">
+                <div class="section-title">About the Institute</div>
+                <p id="clg-desc" style="color:var(--text-muted); line-height:1.6;">
+                    Loading description...
+                </p>
+            </div>
+
+            <div class="section-card">
+                <div class="section-title">Courses Offered</div>
+                <table class="fees-table">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Duration</th>
+                            <th>Total Fees</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courses-body">
+                        <!-- Loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDEBAR -->
+        <div class="sidebar">
+            <div class="widget">
+                <h3>Quick Highlights</h3>
+                <div class="stat-row"><strong>Ranking</strong> <span id="stat-rank">#12 in India</span></div>
+                <div class="stat-row"><strong>Flagship</strong> <span>B.Tech CSE</span></div>
+                <div class="stat-row"><strong>Campus Size</strong> <span>250 Acres</span></div>
+                <div class="stat-row"><strong>Total Faculty</strong> <span>300+</span></div>
+            </div>
+
+            <div class="widget">
+                <h3>Contact Details</h3>
+                <div class="stat-row"><strong>Phone</strong> <span>+91 98765 43210</span></div>
+                <div class="stat-row"><strong>Email</strong> <span>admissions@college.edu</span></div>
+                <div class="stat-row" style="margin-top:10px;"><a href="#"
+                        style="color:var(--primary); text-decoration:none;">🌐 Visit Website</a></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        /* CURSOR */
+        const dot = document.createElement('div'); dot.className = 'cursor-dot';
+        const outline = document.createElement('div'); outline.className = 'cursor-outline';
+        document.body.appendChild(dot); document.body.appendChild(outline);
+        window.addEventListener('mousemove', (e) => {
+            dot.style.left = `${e.clientX}px`; dot.style.top = `${e.clientY}px`;
+            outline.style.left = `${e.clientX}px`; outline.style.top = `${e.clientY}px`;
+        });
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        /* DATA & LOGIC */
+        // Mock Database (In real app, fetch from backend)
+        const collegeDB = {
+            'iit_bombay': {
+                name: "Indian Institute of Technology (IIT), Bombay",
+                location: "Mumbai, Maharashtra",
+                rating: "4.9/5",
+                est: "1958",
+                type: "Government",
+                logo: "https://upload.wikimedia.org/wikipedia/en/1/1d/Indian_Institute_of_Technology_Bombay_Logo.svg",
+                desc: "IIT Bombay is recognized worldwide as a leader in the field of engineering education and research. Reputed for the outstanding calibre of students graduating from its undergraduate and postgraduate programmes, the institute attracts the best students from the country.",
+                rank: "#3 NIRF Engineering",
+                courses: [
+                    { name: "B.Tech Computer Science", duration: "4 Years", fees: "₹9.5 Lakhs" },
+                    { name: "B.Tech Electrical", duration: "4 Years", fees: "₹9.5 Lakhs" },
+                    { name: "M.Tech AI & Data Science", duration: "2 Years", fees: "₹3.2 Lakhs" },
+                    { name: "MBA", duration: "2 Years", fees: "₹8.0 Lakhs" }
+                ]
+            },
+            'bits_pilani': {
+                name: "BITS Pilani",
+                location: "Pilani, Rajasthan",
+                rating: "4.8/5",
+                est: "1964",
+                type: "Private (Deemed)",
+                logo: "https://upload.wikimedia.org/wikipedia/en/d/d3/BITS_Pilani-Logo.svg",
+                desc: "Birla Institute of Technology and Science, Pilani is a private deemed university in Pilani, India. It focuses primarily on higher education and research in engineering and sciences.",
+                rank: "#1 Private Engineering",
+                courses: [
+                    { name: "B.E Computer Science", duration: "4 Years", fees: "₹18.0 Lakhs" },
+                    { name: "B.E Electronics", duration: "4 Years", fees: "₹18.0 Lakhs" },
+                    { name: "MBA", duration: "2 Years", fees: "₹11.0 Lakhs" }
+                ]
+            }
+        };
+
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            // Simulating ID logic. For now, if no ID, default to IIT Bombay
+            // Ideally we'd map "IIT Bombay" text from search to 'iit_bombay' key
+            // For demo purposes, we'll just show IIT Bombay data.
+
+            // To make this dynamic with the Search bar from course.html, 
+            // we need to pass the ID. Since we are using mock dataNames there, 
+            // let's do a simple fuzzy match or default.
+
+            const data = collegeDB['iit_bombay']; // Default load
+
+            // Update UI
+            document.getElementById('clg-logo').src = data.logo;
+            document.getElementById('clg-name').innerText = data.name;
+            document.getElementById('clg-loc').innerText = `📍 ${data.location}`;
+            document.getElementById('clg-rating').innerText = `⭐ ${data.rating}`;
+            document.getElementById('clg-est').innerText = `🏛️ Estd. ${data.est}`;
+            document.getElementById('clg-type').innerText = `🎓 ${data.type}`;
+            document.getElementById('clg-desc').innerText = data.desc;
+            document.getElementById('stat-rank').innerText = data.rank;
+
+            // Render Table
+            const tbody = document.getElementById('courses-body');
+            tbody.innerHTML = data.courses.map(c => `
+                <tr>
+                    <td class="course-name">${c.name}</td>
+                    <td>${c.duration}</td>
+                    <td style="color:var(--primary); font-weight:600;">${c.fees}</td>
+                    <td><a href="#" style="color:var(--accent-cyan); text-decoration:none; font-size:13px; font-weight:600;">View Syllabus ></a></td>
+                </tr>
+            `).join('');
+        };
+    </script>
+</body>
+
+</html>
