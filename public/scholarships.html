@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scholarships & Utilities - EduMon</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-dark: #f8fafc;
+            --text-light: #0f172a;
+            --text-muted: #64748b;
+            --accent-cyan: #06b6d4;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* CUSTOM CURSOR */
+        .cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: background 0.2s;
+        }
+
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(34, 211, 238, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s, top 0.15s ease-out, left 0.15s ease-out;
+        }
+
+        body.hovering .cursor-outline {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(34, 211, 238, 0.1);
+            border-color: rgba(34, 211, 238, 0.2);
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 60px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        }
+
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .brand {
+            font-size: 26px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+        }
+
+        .brand svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s;
+            cursor: none;
+        }
+
+        nav a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* DROPDOWN MENU */
+        .dropdown {
+            position: relative;
+            padding-bottom: 20px;
+            margin-bottom: -20px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid #f1f5f9;
+        }
+
+        .dropdown-content a {
+            color: #334155;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f8fafc;
+            color: var(--primary);
+            padding-left: 25px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .login-btn-header {
+            background: var(--primary);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+        }
+
+        .login-btn-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        /* HERO - Professional Full Width */
+        .util-hero {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 160px 20px 100px;
+            text-align: center;
+            color: white;
+            position: relative;
+            margin-bottom: -40px;
+            overflow: hidden;
+        }
+
+        /* Decorative patterns */
+        .util-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#334155 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.1;
+        }
+
+        .util-hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            position: relative;
+        }
+
+        .util-hero p {
+            font-size: 18px;
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* PAGE CONTENT */
+        .page-container {
+            padding: 0 60px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* TABS */
+        .utility-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            background: white;
+            padding: 10px;
+            border-radius: 100px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f1f5f9;
+            width: fit-content;
+            margin: 0 auto 50px auto;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: none;
+            transition: all 0.3s;
+            font-size: 15px;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+            font-weight: 600;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #f1f5f9;
+            color: var(--text-light);
+        }
+
+        /* CONTENT SECTIONS */
+        .util-section {
+            display: none;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .util-section.active {
+            display: block;
+        }
+
+        /* SCHOLARSHIP CARDS */
+        .scholarship-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        .sch-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .sch-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #e0f2fe;
+        }
+
+        .sch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-cyan);
+            opacity: 0.5;
+        }
+
+        .sch-card:hover::before {
+            opacity: 1;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .badge.merit {
+            background: #e0f2fe;
+            color: #0284c7;
+        }
+
+        .badge.means {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge.girls {
+            background: #fce7f3;
+            color: #db2777;
+        }
+
+        .badge.corporate {
+            background: #fef9c3;
+            color: #ca8a04;
+        }
+
+        .sch-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .sch-amount {
+            font-size: 22px;
+            color: #16a34a;
+            /* Green */
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .sch-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .apply-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .apply-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* PREDICTOR (Special Visual) */
+        .predictor-box {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+            /* Deep shadow */
+            border: 1px solid var(--border-color);
+        }
+
+        .predictor-box h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .rank-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 18px 25px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 20px;
+            margin: 30px auto;
+            text-align: center;
+            outline: none;
+            display: block;
+            font-weight: 600;
+            color: var(--text-light);
+            background: #f8fafc;
+        }
+
+        .rank-input:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .predict-btn {
+            background: var(--accent-cyan);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: none;
+            transition: transform 0.2s;
+        }
+
+        .predict-btn:hover {
+            transform: translateY(-2px);
+            background: #06b6d4;
+        }
+
+        .predict-result {
+            margin-top: 40px;
+            text-align: left;
+            padding: 30px;
+            background: #fcfcfc;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            display: none;
+        }
+
+        .predict-result h3 {
+            font-size: 16px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+        }
+
+        .result-list {
+            list-style: none;
+        }
+
+        .result-item {
+            background: white;
+            padding: 15px;
+            border: 1px solid #f1f5f9;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chance-high {
+            color: #16a34a;
+            font-weight: 600;
+            background: #dcfce7;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .chance-med {
+            color: #ca8a04;
+            font-weight: 600;
+            background: #fef9c3;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .page-container {
+                padding: 20px;
+                margin-top: 50px;
+            }
+
+            .util-hero h1 {
+                font-size: 32px;
+            }
+
+            .scholarship-list {
+                grid-template-columns: 1fr;
+            }
+
+            .utility-tabs {
+                flex-wrap: wrap;
+                border-radius: 20px;
+            }
+
+            .tab-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="brand-area">
+            <a href="index.html" style="text-decoration:none; color:inherit;">
+                <div class="brand">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2 .715V17a1 1 0 001 1z">
+                        </path>
+                    </svg>
+                    <span>EduMon</span>
+                </div>
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" style="color:var(--text-light);">Colleges ▾</a>
+                    <div class="dropdown-content">
+                        <a href="course.html?type=btech">B.Tech</a>
+                        <a href="course.html?type=mtech">M.Tech</a>
+                        <a href="course.html?type=pharma">Pharma</a>
+                    </div>
+                </li>
+                <li><a href="exams.html">Exams</a></li>
+                <li><a href="scholarships.html" style="color:var(--accent-cyan);">Student Utilities</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button class="login-btn-header">Login</button>
+        </div>
+    </header>
+
+    <section class="util-hero">
+        <h1>Start Funding Your Future</h1>
+        <p>Explore exclusive scholarships, predict your college admission chances, and access premium study materials.
+        </p>
+    </section>
+
+    <div class="page-container">
+
+        <div class="utility-tabs">
+            <button class="tab-btn active" onclick="switchTab('scholarships')">Scholarships</button>
+            <button class="tab-btn" onclick="switchTab('predictor')">College Predictor</button>
+            <button class="tab-btn" onclick="switchTab('materials')">Study Materials</button>
+        </div>
+
+        <!-- SCHOLARSHIPS SECTION -->
+        <div id="scholarships" class="util-section active">
+            <div class="scholarship-list">
+                <!-- S1 -->
+                <div class="sch-card">
+                    <span class="badge merit">Merit Based</span>
+                    <h3 class="sch-title">National Merit Scholarship</h3>
+                    <div class="sch-amount">₹50,000 <span style="font-size:12px; color:#64748b; font-weight:400;">/
+                            Year</span></div>
+                    <p class="sch-desc">Awarded to top 1% of students in Class 12th board exams. Applicable for all
+                        undergraduate courses.</p>
+                    <a href="#" class="apply-btn">View Details</a>
+                </div>
+                <!-- S2 -->
+                <div class="sch-card">
+                    <span class="badge means">Means Based</span>
+                    <h3 class="sch-title">Vidyalakshmi Education Loan</h3>
+                    <div class="sch-amount">Low Interest <span
+                            style="font-size:12px; color:#64748b; font-weight:400;">Loans</span></div>
+                    <p class="sch-desc">Government initiative to provide easy education loans to students with poor
+                        economic background.</p>
+                    <a href="#" class="apply-btn">View Details</a>
+                </div>
+                <!-- S3 -->
+                <div class="sch-card">
+                    <span class="badge girls">Girls Specific</span>
+                    <h3 class="sch-title">Pragati Scholarship</h3>
+                    <div class="sch-amount">₹50,000 <span style="font-size:12px; color:#64748b; font-weight:400;">/
+                            Year</span></div>
+                    <p class="sch-desc">AICTE scheme for girl students pursuing technical education. Up to 2 girls per
+                        family eligible.</p>
+                    <a href="#" class="apply-btn">View Details</a>
+                </div>
+                <!-- S4 -->
+                <div class="sch-card">
+                    <span class="badge corporate">Corporate</span>
+                    <h3 class="sch-title">Reliance Foundation</h3>
+                    <div class="sch-amount">₹2 Lakhs <span
+                            style="font-size:12px; color:#64748b; font-weight:400;">Total</span></div>
+                    <p class="sch-desc">For identifying and supporting highly talented undergraduate students from all
+                        corners of India.</p>
+                    <a href="#" class="apply-btn">View Details</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PREDICTOR SECTION -->
+        <div id="predictor" class="util-section">
+            <div class="predictor-box">
+                <h2>JEE Rank Predictor</h2>
+                <p style="color:#64748b; margin-bottom: 20px;">Enter your expected CRL rank to see your most likely
+                    college options based on last year's cutoffs.</p>
+                <input type="number" placeholder="Enter Rank (e.g. 15000)" class="rank-input" id="rankInput">
+                <button class="predict-btn" onclick="predict()">Calculate Possibilities</button>
+
+                <div class="predict-result" id="resultArea">
+                    <h3>Based on your rank:</h3>
+                    <ul class="result-list">
+                        <li class="result-item">
+                            <span>NIT Warangal - ECE</span>
+                            <span class="chance-high">High Chance</span>
+                        </li>
+                        <li class="result-item">
+                            <span>NIT Calicut - Mechanical</span>
+                            <span class="chance-high">High Chance</span>
+                        </li>
+                        <li class="result-item">
+                            <span>IIIT Hyderabad - CSE</span>
+                            <span class="chance-med">Slim Chance</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- MATERIALS SECTION -->
+        <div id="materials" class="util-section">
+            <div class="scholarship-list">
+                <div class="sch-card" style="text-align:center; padding-top:40px;">
+                    <span style="font-size:48px; display:block; margin-bottom:20px;">📚</span>
+                    <h3 class="sch-title">JEE Previous Papers</h3>
+                    <p class="sch-desc">Comprehensive archive of last 10 years of Question papers with detailed solution
+                        keys.</p>
+                    <a href="#" class="apply-btn">Download PDF Bundle</a>
+                </div>
+                <div class="sch-card" style="text-align:center; padding-top:40px;">
+                    <span style="font-size:48px; display:block; margin-bottom:20px;">📝</span>
+                    <h3 class="sch-title">Formula Cheatsheets</h3>
+                    <p class="sch-desc">Quick revision sheets for Physics, Chemistry, and Maths formulas tailored for
+                        last-minute prep.</p>
+                    <a href="#" class="apply-btn">Download PDF Bundle</a>
+                </div>
+                <div class="sch-card" style="text-align:center; padding-top:40px;">
+                    <span style="font-size:48px; display:block; margin-bottom:20px;">🧠</span>
+                    <h3 class="sch-title">Mock Tests</h3>
+                    <p class="sch-desc">Full-length timed mock tests designed to simulate the actual exam environment.
+                    </p>
+                    <a href="#" class="apply-btn">Start Practice</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // CURSOR
+        const dot = document.createElement('div');
+        dot.className = 'cursor-dot';
+        const outline = document.createElement('div');
+        outline.className = 'cursor-outline';
+        document.body.appendChild(dot);
+        document.body.appendChild(outline);
+
+        window.addEventListener('mousemove', (e) => {
+            dot.style.left = `${e.clientX}px`;
+            dot.style.top = `${e.clientY}px`;
+            outline.style.left = `${e.clientX}px`;
+            outline.style.top = `${e.clientY}px`;
+        });
+
+        // HOVER
+        document.querySelectorAll('a, button, .sch-card').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        // TABS
+        function switchTab(tabId) {
+            // Hide all
+            document.querySelectorAll('.util-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            // Show Target
+            document.getElementById(tabId).classList.add('active');
+
+            // Highlight Button
+            const btns = document.querySelectorAll('.tab-btn');
+            if (tabId === 'scholarships') btns[0].classList.add('active');
+            if (tabId === 'predictor') btns[1].classList.add('active');
+            if (tabId === 'materials') btns[2].classList.add('active');
+        }
+
+        function predict() {
+            const rank = document.getElementById('rankInput').value;
+            if (rank) {
+                const result = document.getElementById('resultArea');
+                result.style.display = 'block';
+                result.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert("Please enter a valid rank");
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Educational Blog - EduMon</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-dark: #f0f9ff;
+            --text-light: #1e293b;
+            --text-muted: #64748b;
+            --accent-cyan: #0891b2;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* CUSTOM CURSOR */
+        .cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: background 0.2s;
+        }
+
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(34, 211, 238, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s, top 0.15s ease-out, left 0.15s ease-out;
+        }
+
+        body.hovering .cursor-outline {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(34, 211, 238, 0.1);
+            border-color: rgba(34, 211, 238, 0.2);
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 60px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand svg {
+            width: 32px;
+            height: 32px;
+            color: var(--primary);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s;
+            cursor: none;
+        }
+
+        nav a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* DROPDOWN MENU */
+        .dropdown {
+            position: relative;
+            padding-bottom: 20px;
+            margin-bottom: -20px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            z-index: 1000;
+            overflow: hidden;
+            margin-top: 0;
+        }
+
+        .dropdown-content a {
+            color: #1e293b;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f0f9ff;
+            color: var(--primary);
+            padding-left: 25px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .login-btn-header {
+            background: var(--primary);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            cursor: none;
+            transition: all 0.3s;
+        }
+
+        /* PAGE CONTENT */
+        .page-container {
+            margin-top: 100px;
+            padding: 40px 60px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .blog-hero {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #dbeafe, #eff6ff);
+            border-radius: 20px;
+        }
+
+        .blog-hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            cursor: none;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-img {
+            height: 200px;
+            background: #cbd5e1;
+            /* Placeholder color */
+            position: relative;
+        }
+
+        .blog-img-content {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: white;
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-date {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .blog-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .page-container {
+                padding: 20px;
+                margin-top: 80px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="brand-area">
+            <a href="index.html" style="text-decoration:none; color:inherit;">
+                <div class="brand">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2 .715V17a1 1 0 001 1z">
+                        </path>
+                    </svg>
+                    <span>EduMon</span>
+                </div>
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" style="color:var(--text-light);">Colleges ▾</a>
+                    <div class="dropdown-content">
+                        <a href="course.html?type=btech">B.Tech</a>
+                        <a href="course.html?type=mtech">M.Tech</a>
+                        <a href="course.html?type=pharma">Pharma</a>
+                    </div>
+                </li>
+                <li><a href="exams.html">Exams</a></li>
+                <li><a href="compare.html">Compare</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button class="login-btn-header">Login</button>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <section class="blog-hero">
+            <h1>EduMon Insights</h1>
+            <p>Latest educational news, exam updates, and career guidance tailored for you.</p>
+        </section>
+
+        <main class="blog-grid">
+            <!-- Article 1 -->
+            <article class="blog-card">
+                <div class="blog-img">
+                    <span class="blog-tag">Exam News</span>
+                    <!-- Only color placeholder due to no images -->
+                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=500"
+                        alt="Study" class="blog-img-content">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-date">Jan 10, 2026</span>
+                    <h2 class="blog-title">JEE Mains 2026: Key Dates and Last Minute Prep Tips</h2>
+                    <p class="blog-excerpt">The NTA has released the final schedule for JEE Mains 2026. Here's a
+                        breakdown of the important dates and a 15-day strategy to boost your score.</p>
+                    <a href="#" class="read-more">Read Article →</a>
+                </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="blog-card">
+                <div class="blog-img">
+                    <span class="blog-tag">Career</span>
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80&w=500"
+                        alt="Work" class="blog-img-content">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-date">Jan 08, 2026</span>
+                    <h2 class="blog-title">Top 10 Engineering Branches with Highest Placement in 2025</h2>
+                    <p class="blog-excerpt">Is CSE still the king? Or are Electronics and AI taking over? We analyze
+                        placement reports from IITs and NITs to find out.</p>
+                    <a href="#" class="read-more">Read Article →</a>
+                </div>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="blog-card">
+                <div class="blog-img">
+                    <span class="blog-tag">Guidance</span>
+                    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=500"
+                        alt="Student" class="blog-img-content">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-date">Jan 05, 2026</span>
+                    <h2 class="blog-title">How to Choose the Right College? A Comprehensive Guide</h2>
+                    <p class="blog-excerpt">Confused between a better branch in a Tier-2 college vs a lower branch in a
+                        Tier-1 college? We help you navigate this dilemma.</p>
+                    <a href="#" class="read-more">Read Article →</a>
+                </div>
+            </article>
+            <!-- Article 4 -->
+            <article class="blog-card">
+                <div class="blog-img">
+                    <span class="blog-tag">Scholarships</span>
+                    <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&q=80&w=500"
+                        alt="Money" class="blog-img-content">
+                </div>
+                <div class="blog-content">
+                    <span class="blog-date">Jan 02, 2026</span>
+                    <h2 class="blog-title">Scholarships for Indian Students: Apply Before March 2026</h2>
+                    <p class="blog-excerpt">A list of top merit-cum-means scholarships available for engineering and
+                        medical aspirants this year.</p>
+                    <a href="#" class="read-more">Read Article →</a>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <script>
+        // CURSOR
+        const dot = document.createElement('div');
+        dot.className = 'cursor-dot';
+        const outline = document.createElement('div');
+        outline.className = 'cursor-outline';
+        document.body.appendChild(dot);
+        document.body.appendChild(outline);
+
+        window.addEventListener('mousemove', (e) => {
+            dot.style.left = `${e.clientX}px`;
+            dot.style.top = `${e.clientY}px`;
+            outline.style.left = `${e.clientX}px`;
+            outline.style.top = `${e.clientY}px`;
+        });
+
+        // HOVER
+        document.querySelectorAll('a, button, .blog-card').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+    </script>
+</body>
+
+</html>

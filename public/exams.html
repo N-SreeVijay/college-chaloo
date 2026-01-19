@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exams - EduMon</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary: #2563EB;
+            /* Vibrant Blue */
+            --primary-dark: #1E40AF;
+            --secondary: #0F172A;
+            /* Slate 900 */
+            --accent: #F59E0B;
+            /* Amber */
+            --bg-body: #F8FAFC;
+            /* Light Slate */
+            --bg-card: #FFFFFF;
+            --text-main: #334155;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 5%;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .brand {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .brand span {
+            color: var(--secondary);
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f5f9;
+            padding: 8px 16px;
+            border-radius: 50px;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+            background: #e0f2fe;
+        }
+
+        .header-search {
+            background: white;
+            border-radius: 50px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-right: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .header-search input {
+            border: none;
+            outline: none;
+            padding: 5px;
+            font-size: 14px;
+            width: 200px;
+            color: var(--text-light);
+        }
+
+        .header-search svg {
+            color: #64748b;
+            width: 18px;
+        }
+
+        /* HERO SECTION */
+        .hero-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 50px 5%;
+            position: relative;
+            overflow: hidden;
+            /* Removed negative margin to fix sidebar overlap issues */
+            margin-bottom: 30px;
+        }
+
+        .hero-content h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            color: #94a3b8;
+            font-size: 16px;
+            opacity: 0.9;
+            max-width: 800px;
+        }
+
+        /* MAIN LAYOUT */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: flex;
+            gap: 40px;
+            position: relative;
+        }
+
+        /* SIDEBAR FILTERS */
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            height: fit-content;
+            position: sticky;
+            /* Increased top spacing to avoid header collision */
+            top: 100px;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .filter-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--secondary);
+        }
+
+        .reset-link {
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .filter-group {
+            margin-bottom: 24px;
+        }
+
+        .filter-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            border-radius: 4px;
+        }
+
+        .checkbox-item span {
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .checkbox-item input:checked+span {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        /* GRID AREA */
+        .grid-area {
+            flex: 1;
+        }
+
+        .results-info {
+            margin-bottom: 20px;
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        /* EXAM CARD */
+        .exam-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .exam-card.hidden {
+            display: none;
+        }
+
+        .exam-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary);
+        }
+
+        /* Top Color Bar */
+        .exam-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .exam-card:hover::after {
+            opacity: 1;
+        }
+
+        .card-body {
+            padding: 24px;
+            flex: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .exam-badge {
+            width: 50px;
+            height: 50px;
+            background: #F8FAFC;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+
+        .status-pill {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-open {
+            background: #DCFCE7;
+            color: #166534;
+        }
+
+        .status-close {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .status-soon {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .card-title h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 4px;
+        }
+
+        .card-title p {
+            font-size: 13px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .info-grid {
+            margin-top: 15px;
+            background: #F8FAFC;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #64748B;
+            margin-bottom: 2px;
+        }
+
+        .info-item span {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .update-box {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #475569;
+            padding-left: 10px;
+            border-left: 3px solid var(--accent);
+            line-height: 1.4;
+        }
+
+        .card-footer {
+            padding: 15px 24px;
+            border-top: 1px solid var(--border);
+            background: white;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-info {
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        .btn-info:hover {
+            background: #F1F5F9;
+            border-color: #CBD5E1;
+            color: var(--secondary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border: 1px solid var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="brand-group">
+            <a href="index.html" class="brand">EduMon<span>.</span></a>
+            <div style="width: 1px; height: 24px; background: var(--border);"></div>
+            <a href="index.html" class="back-link">
+                ← Back to Home
+            </a>
+        </div>
+
+        <div class="header-search">
+            <input type="text" placeholder="Search exams...">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+        </div>
+
+        <nav>
+            <!-- Header Right if needed -->
+        </nav>
+    </header>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Entrance Exams Directory 2024</h1>
+            <p>Comprehensive guide to all major entrance exams in India. Track dates, deadlines, and official updates in
+                one place.</p>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <div class="filter-header">
+                <h3>Filters</h3>
+                <div class="reset-link" onclick="resetFilters()">Reset All</div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-title">Stream</div>
+                <label class="checkbox-item"><input type="checkbox" name="stream" value="engineering"
+                        onchange="filterExams()"> <span>Engineering</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="stream" value="medical"
+                        onchange="filterExams()"> <span>Medical</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="stream" value="management"
+                        onchange="filterExams()"> <span>Management</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="stream" value="law" onchange="filterExams()">
+                    <span>Law</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="stream" value="design"
+                        onchange="filterExams()"> <span>Design</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="stream" value="pharmacy"
+                        onchange="filterExams()"> <span>Pharmacy</span></label>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-title">Exam Level</div>
+                <label class="checkbox-item"><input type="checkbox" name="level" value="national"
+                        onchange="filterExams()"> <span>National Level</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="level" value="state" onchange="filterExams()">
+                    <span>State Level</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="level" value="university"
+                        onchange="filterExams()"> <span>University Level</span></label>
+            </div>
+        </aside>
+
+        <!-- Grid Results -->
+        <section class="grid-area">
+            <div class="results-info">
+                <span id="resultCount">Showing All Entrance Exams</span>
+            </div>
+
+            <div class="cards-grid">
+
+                <!-- 1. JEE Mains -->
+                <div class="exam-card" data-stream="engineering" data-level="national">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="exam-badge">JM</div>
+                            <span class="status-pill status-open">Open</span>
+                        </div>
+                        <div class="card-title">
+                            <h3>JEE Mains 2024</h3>
+                            <p>National Testing Agency</p>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Deadline</label><span>Nov 30, 2023</span></div>
+                            <div class="info-item"><label>Exam Date</label><span>Jan 24, 2024</span></div>
+                        </div>
+                        <div class="update-box">Syllabus updated, Physics topics reduced. Session 1 registration live.
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-info">View Info</a>
+                        <a href="https://jeemain.nta.nic.in/" target="_blank" class="btn btn-primary">Official
+                            Website</a>
+                    </div>
+                </div>
+
+                <!-- 2. NEET UG -->
+                <div class="exam-card" data-stream="medical" data-level="national">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="exam-badge" style="color:#10B981; border-color:#10B981;">NT</div>
+                            <span class="status-pill status-soon">Soon</span>
+                        </div>
+                        <div class="card-title">
+                            <h3>NEET UG 2024</h3>
+                            <p>National Testing Agency</p>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Reg Start</label><span>Mar 2024</span></div>
+                            <div class="info-item"><label>Exam Date</label><span>May 05, 2024</span></div>
+                        </div>
+                        <div class="update-box">Pen & Paper mode confirmed. Syllabus rationalized as per NCERT.</div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-info">View Info</a>
+                        <a href="https://neet.nta.nic.in/" target="_blank" class="btn btn-primary">Official Website</a>
+                    </div>
+                </div>
+
+                <!-- 3. CAT -->
+                <div class="exam-card" data-stream="management" data-level="national">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="exam-badge" style="color:#F59E0B; border-color:#F59E0B;">CT</div>
+                            <span class="status-pill status-close">Closed</span>
+                        </div>
+                        <div class="card-title">
+                            <h3>CAT 2023</h3>
+                            <p>IIM Lucknow</p>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Closed</label><span>Sep 13, 2023</span></div>
+                            <div class="info-item"><label>Exam Date</label><span>Nov 26, 2023</span></div>
+                        </div>
+                        <div class="update-box">Admit cards available for download. Check exam center details.</div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-info">View Info</a>
+                        <a href="https://iimcat.ac.in/" target="_blank" class="btn btn-primary">Official Website</a>
+                    </div>
+                </div>
+
+                <!-- 4. GATE -->
+                <div class="exam-card" data-stream="engineering" data-level="national">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="exam-badge" style="color:#EF4444; border-color:#EF4444;">GT</div>
+                            <span class="status-pill status-close">Closed</span>
+                        </div>
+                        <div class="card-title">
+                            <h3>GATE 2024</h3>
+                            <p>IISc Bangalore</p>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Closed</label><span>Oct 20, 2023</span></div>
+                            <div class="info-item"><label>Exam Date</label><span>Feb 03, 2024</span></div>
+                        </div>
+                        <div class="update-box">Data Science & AI paper introduced this year. Admit cards out Jan 3rd.
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-info">View Info</a>
+                        <a href="https://gate2024.iisc.ac.in/" target="_blank" class="btn btn-primary">Official
+                            Website</a>
+                    </div>
+                </div>
+
+                <!-- 5. BITSAT -->
+                <div class="exam-card" data-stream="engineering" data-level="university">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="exam-badge" style="color:#8B5CF6; border-color:#8B5CF6;">BI</div>
+                            <span class="status-pill status-soon">Jan 2024</span>
+                        </div>
+                        <div class="card-title">
+                            <h3>BITSAT 2024</h3>
+                            <p>BITS Pilani</p>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Reg Start</label><span>Jan 15, 2024</span></div>
+                            <div class="info-item"><label>Exam Date</label><span>May 2024</span></div>
+                        </div>
+                        <div class="update-box">Two sessions like previous year. Best score will be considered.</div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-info">View Info</a>
+                        <a href="https://www.bitsadmission.com/" target="_blank" class="btn btn-primary">Official
+                            Website</a>
+                    </div>
+                </div>
+
+                <!-- 6. CLAT -->
+                <div class="exam-card" data-stream="law" data-level="national">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="exam-badge" style="color:#BE123C; border-color:#BE123C;">CL</div>
+                            <span class="status-pill status-close">Closed</span>
+                        </div>
+                        <div class="card-title">
+                            <h3>CLAT 2024</h3>
+                            <p>Consortium of NLUs</p>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Closed</label><span>Nov 10, 2023</span></div>
+                            <div class="info-item"><label>Exam Date</label><span>Dec 03, 2023</span></div>
+                        </div>
+                        <div class="update-box">Questions reduced to 120. Exam duration 2 hours (2 PM to 4 PM).</div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-info">View Info</a>
+                        <a href="https://consortiumofnlus.ac.in/" target="_blank" class="btn btn-primary">Official
+                            Website</a>
+                    </div>
+                </div>
+
+                <!-- 7. XAT -->
+                <div class="exam-card" data-stream="management" data-level="national">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="exam-badge" style="color:#1E3A8A; border-color:#1E3A8A;">XT</div>
+                            <span class="status-pill status-open">Open</span>
+                        </div>
+                        <div class="card-title">
+                            <h3>XAT 2024</h3>
+                            <p>XLRI Jamshedpur</p>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Deadline</label><span>Nov 30, 2023</span></div>
+                            <div class="info-item"><label>Exam Date</label><span>Jan 07, 2024</span></div>
+                        </div>
+                        <div class="update-box">Exam time changed to afternoon (2 PM - 5:30 PM).</div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-info">View Info</a>
+                        <a href="https://xatonline.in/" target="_blank" class="btn btn-primary">Official Website</a>
+                    </div>
+                </div>
+
+                <!-- 8. NIFT -->
+                <div class="exam-card" data-stream="design" data-level="national">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="exam-badge" style="color:#D946EF; border-color:#D946EF;">NF</div>
+                            <span class="status-pill status-open">Open</span>
+                        </div>
+                        <div class="card-title">
+                            <h3>NIFT 2024</h3>
+                            <p>National Testing Agency</p>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Deadline</label><span>Jan 10, 2024</span></div>
+                            <div class="info-item"><label>Exam Date</label><span>Feb 05, 2024</span></div>
+                        </div>
+                        <div class="update-box">Admissions for B.Des and M.Des programs across all NIFT campuses.</div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-info">View Info</a>
+                        <a href="https://nift.ac.in/" target="_blank" class="btn btn-primary">Official Website</a>
+                    </div>
+                </div>
+
+                <!-- 9. AP EAPCET -->
+                <div class="exam-card" data-stream="engineering" data-level="state">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="exam-badge" style="color:#059669; border-color:#059669;">AP</div>
+                            <span class="status-pill status-soon">Apr 2024</span>
+                        </div>
+                        <div class="card-title">
+                            <h3>AP EAPCET 2024</h3>
+                            <p>APSCHE / JNTU</p>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Reg Start</label><span>Mar 2024</span></div>
+                            <div class="info-item"><label>Exam Date</label><span>May 15, 2024</span></div>
+                        </div>
+                        <div class="update-box">100% weightage to entrance marks. 25% Inter weightage removed.</div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-info">View Info</a>
+                        <a href="https://cets.apsche.ap.gov.in/EAPCET/" target="_blank" class="btn btn-primary">Official
+                            Website</a>
+                    </div>
+                </div>
+
+                <!-- 10. GPAT -->
+                <div class="exam-card" data-stream="pharmacy" data-level="national">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <div class="exam-badge" style="color:#0891B2; border-color:#0891B2;">GP</div>
+                            <span class="status-pill status-soon">Feb 2024</span>
+                        </div>
+                        <div class="card-title">
+                            <h3>GPAT 2024</h3>
+                            <p>National Testing Agency</p>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item"><label>Reg Start</label><span>Feb 2024</span></div>
+                            <div class="info-item"><label>Exam Date</label><span>Apr 2024</span></div>
+                        </div>
+                        <div class="update-box">Graduate Pharmacy Aptitude Test for M.Pharm admissions.</div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-info">View Info</a>
+                        <a href="https://gpat.nta.nic.in/" target="_blank" class="btn btn-primary">Official Website</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function filterExams() {
+            const streamInputs = document.querySelectorAll('input[name="stream"]:checked');
+            const levelInputs = document.querySelectorAll('input[name="level"]:checked');
+            const selectedStreams = Array.from(streamInputs).map(i => i.value);
+            const selectedLevels = Array.from(levelInputs).map(i => i.value);
+
+            const cards = document.querySelectorAll('.exam-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const stream = card.getAttribute('data-stream');
+                const level = card.getAttribute('data-level');
+
+                const streamMatch = selectedStreams.length === 0 || selectedStreams.includes(stream);
+                const levelMatch = selectedLevels.length === 0 || selectedLevels.includes(level);
+
+                if (streamMatch && levelMatch) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            document.getElementById('resultCount').innerText = visibleCount > 0 ? `Showing ${visibleCount} Results` : 'No Exams Found';
+        }
+
+        function resetFilters() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(i => i.checked = false);
+            filterExams();
+        }
+    </script>
+</body>
+
+</html>
