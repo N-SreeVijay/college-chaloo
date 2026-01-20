@@ -241,6 +241,209 @@
             animation: fadeIn 0.2s ease-out;
         }
 
+        /* MEGA MENU POPUP OVERLAY STYLES - REVISED */
+        .mega-parent {
+            position: relative;
+        }
+
+        /* Actually we want full width, so this might need to be static on parent or absolute on body */
+
+        .mega-menu-overlay {
+            display: none !important;
+            /* Hide old overlay */
+        }
+
+        /* COMPACT MEGA MENU STYLES */
+        .mega-menu-popup {
+            display: none;
+            position: fixed;
+            /* Fixed to keep it stable on screen */
+            top: 85px;
+            /* Just below header */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            /* Reduced box size */
+            height: 450px;
+            background: white;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border-radius: 16px;
+            z-index: 1100;
+            overflow: hidden;
+            /* Ensure rounded corners clip content */
+            border: 1px solid #f1f5f9;
+        }
+
+        .mega-menu-popup.active {
+            display: flex;
+            animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -10px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0) scale(1);
+            }
+        }
+
+        .mega-sidebar {
+            width: 240px;
+            background: #1e1b4b;
+            /* Darker distinct Navy/Purple */
+            color: white;
+            flex-shrink: 0;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+
+        .mega-sidebar ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .mega-sidebar li {
+            border: none;
+        }
+
+        .mega-sidebar a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .mega-sidebar a:hover,
+        .mega-sidebar a.active {
+            background: #312e81;
+            /* Lighter purple on hover */
+            color: white;
+            padding-left: 28px;
+            /* Slide effect */
+        }
+
+        .mega-content {
+            flex: 1;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* 3 Cols for better spacing in compact view */
+            gap: 20px;
+            overflow-y: auto;
+            background: #fff;
+        }
+
+        .col-group h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            color: #0f172a;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .col-group ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .col-group li {
+            margin-bottom: 8px;
+        }
+
+        .col-group a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 13.5px;
+            transition: color 0.1s;
+        }
+
+        .col-group a:hover {
+            color: #f97316;
+            font-weight: 500;
+        }
+
+        .view-all-btn {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #f97316;
+            text-transform: uppercase;
+        }
+
+        .close-mega-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9;
+            color: #475569;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+            z-index: 10;
+        }
+
+        .close-mega-btn:hover {
+            background: #e2e8f0;
+            color: #ef4444;
+        }
+
+
+
+        .col-group ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .col-group li {
+            margin-bottom: 10px;
+        }
+
+        .col-group a {
+            font-size: 14px;
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .col-group a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .close-mega-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -1464,20 +1667,17 @@
                     <input type="text" placeholder="Search colleges, exams...">
                 </li>
 
-                <li class="dropdown">
-                    <a href="#">Colleges ▾</a>
-                    <div class="dropdown-content">
-                        <a href="course.html?type=btech">Engineering (B.Tech)</a>
-                        <a href="course.html?type=mba">Management (MBA)</a>
-                        <a href="course.html?type=mbbs">Medical (MBBS)</a>
-                        <a href="course.html?type=pharma">Pharmacy</a>
-                        <a href="course.html?type=arts">Arts & Design</a>
-                    </div>
+                <li>
+                    <a href="javascript:void(0)" onclick="toggleMegaMenu()"
+                        style="color:var(--text-light); font-weight:600; cursor:pointer;">Colleges ▾</a>
                 </li>
                 <li><a href="exams.html">Exams</a></li>
+                <li><a href="course.html?type=default">Courses</a></li>
+                <li><a href="javascript:void(0)" onclick="toggleCareersMenu()"
+                        style="color:var(--text-light); font-weight:600; cursor:pointer;">Careers ▾</a></li>
                 <li><a href="compare.html">Compare</a></li>
                 <li><a href="scholarships.html">Utilities</a></li>
-                <li><a href="blog.html">Blog</a></li>
+
                 <li><a href="#" onclick="openContactModal(event)">Contact Us</a></li>
             </ul>
         </nav>
@@ -1496,14 +1696,13 @@
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-left">
-            <span class="subtitle">Online E-Learning Courses</span>
             <h1>Creating a Better Future through <span>Education</span></h1>
             <p class="hero-desc">It is long established fact that a reader will be distracted by the readable content of
                 a
                 page when looking at its layout.</p>
 
             <div class="cta-group">
-                <a href="course.html" class="btn-primary">All Courses</a>
+                <a href="course.html?type=default" class="btn-primary">All Courses</a>
                 <a href="#" class="btn-outline" onclick="openContactModal(event)">Contact Us</a>
             </div>
 
@@ -1635,6 +1834,32 @@
         </div>
     </section>
 
+
+    <!-- CAREER COMPASS BANNER -->
+    <section class="career-compass-banner"
+        style="background: linear-gradient(90deg, #ffedd5 0%, #e2e8f0 100%); padding: 60px 0; border-top: 1px solid #fed7aa; border-bottom: 1px solid #cbd5e1;">
+        <div class="container"
+            style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap;">
+
+            <div style="flex: 1; min-width: 300px;">
+                <h2 style="font-size: 32px; font-weight: 800; color: #1e1b4b; margin-bottom: 15px;">Confused about the
+                    best career choice for you?</h2>
+                <p style="font-size: 16px; color: #334155; line-height: 1.6; max-width: 650px;">
+                    Discover your path with Career Compass, our personalised career recommendation tool. Explore your
+                    skills, personality, and interests for career advice and guidance designed just for you.
+                </p>
+            </div>
+
+            <div>
+                <a href="careers.html"
+                    style="background: #f59e0b; color: #0f172a; font-weight: 700; padding: 16px 32px; border-radius: 6px; text-decoration: none; display: inline-block; transition: all 0.2s; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3); font-size: 15px;">
+                    Get Career Recommendations
+                </a>
+            </div>
+
+        </div>
+    </section>
+
     <!-- WELCOME SECTION -->
     <section class="welcome-section">
         <div class="welcome-text">
@@ -1729,20 +1954,20 @@
 
         <div class="topics-grid">
 
-            <!-- 1. CS -->
-            <div class="topic-card">
+            <!-- 1. CS (Using as B.Tech Link) -->
+            <div class="topic-card" onclick="window.location.href='course.html?type=btech'">
                 <div class="topic-icon bg-blue">
                     <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M16 18l6-6-6-6" />
                         <path d="M8 6l-6 6 6 6" />
                     </svg>
                 </div>
-                <div class="topic-title">Computer Science</div>
-                <div class="topic-count">120+ Courses</div>
+                <div class="topic-title">B.Tech / Engineering</div>
+                <div class="topic-count">120+ Specializations</div>
             </div>
 
-            <!-- 2. Business -->
-            <div class="topic-card">
+            <!-- 2. Business (MBA) -->
+            <div class="topic-card" onclick="window.location.href='course.html?type=mba'">
                 <div class="topic-icon bg-green">
                     <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <line x1="12" y1="20" x2="12" y2="10" />
@@ -1750,8 +1975,8 @@
                         <line x1="6" y1="20" x2="6" y2="16" />
                     </svg>
                 </div>
-                <div class="topic-title">Business Mgmt</div>
-                <div class="topic-count">85+ Courses</div>
+                <div class="topic-title">MBA / Business</div>
+                <div class="topic-count">85+ Specializations</div>
             </div>
 
             <!-- 3. Arts -->
@@ -1833,153 +2058,241 @@
         </div>
     </section>
 
-    <!-- EDUCATION THEME STATS SECTION -->
-    <section class="stats-section">
-        <div class="stats-header">
-            <h2>Education Theme</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        </div>
+    <!-- COLLEGE DISCOVERY DASHBOARD SECTION -->
+    <section class="discovery-section" style="padding: 60px 0; background-color: #ffffff;">
+        <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 0 20px;">
 
-        <div class="stats-grid">
-            <!-- Left Stats -->
-            <div class="stats-col">
-                <div class="stat-item">
-                    <div class="stat-icon-wrapper">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                            <polyline points="22 4 12 14.01 9 11.01" />
-                        </svg>
-                    </div>
-                    <h3><span class="counter" data-target="1235">0</span></h3>
-                    <p>Project Completed</p>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon-wrapper">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-                            <path d="M4 22h16" />
-                            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
-                            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
-                            <path
-                                d="M18 2h-4c0-1.1-.9-2-2-2h-3C8 0 8 .9 8 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
-                        </svg>
-                    </div>
-                    <h3><span class="counter" data-target="78">0</span></h3>
-                    <p>Awards Won</p>
-                </div>
+            <!-- HEADER -->
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="font-size: 32px; font-weight: 800; color: #1e293b; margin-bottom: 10px;">Find The Perfect
+                    College For You</h2>
+                <p style="color: #64748b; font-size: 16px;">Discover top colleges, exams, and opportunities in your
+                    preferred field.</p>
             </div>
 
-            <!-- Center Image -->
-            <div class="stats-col center-img-col">
-                <img src="https://img.freepik.com/free-photo/group-diverse-grads-throwing-caps-up-sky_53876-56031.jpg"
-                    alt="Students Group" class="stats-center-img">
+            <!-- TABS -->
+            <div class="discovery-tabs"
+                style="display: flex; justify-content: center; gap: 30px; border-bottom: 2px solid #e2e8f0; margin-bottom: 40px; overflow-x: auto; white-space: nowrap;">
+                <div onclick="switchDiscTab(this, 'engineering')" class="disc-tab active"
+                    style="padding: 0 5px 15px; color: #f59e0b; border-bottom: 3px solid #f59e0b; font-weight: 700; cursor: pointer; text-transform: uppercase;">
+                    Engineering</div>
+                <div onclick="switchDiscTab(this, 'management')" class="disc-tab"
+                    style="padding: 0 5px 15px; color: #64748b; border-bottom: 3px solid section transparent; font-weight: 600; cursor: pointer; text-transform: uppercase;">
+                    Management</div>
+                <div onclick="switchDiscTab(this, 'medical')" class="disc-tab"
+                    style="padding: 0 5px 15px; color: #64748b; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; text-transform: uppercase;">
+                    Medical</div>
+                <div onclick="switchDiscTab(this, 'science')" class="disc-tab"
+                    style="padding: 0 5px 15px; color: #64748b; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; text-transform: uppercase;">
+                    Science</div>
+                <div onclick="switchDiscTab(this, 'commerce')" class="disc-tab"
+                    style="padding: 0 5px 15px; color: #64748b; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; text-transform: uppercase;">
+                    Commerce</div>
+                <div onclick="switchDiscTab(this, 'arts')" class="disc-tab"
+                    style="padding: 0 5px 15px; color: #64748b; border-bottom: 3px solid transparent; font-weight: 600; cursor: pointer; text-transform: uppercase;">
+                    Arts</div>
             </div>
 
-            <!-- Right Stats -->
-            <div class="stats-col">
-                <div class="stat-item">
-                    <div class="stat-icon-wrapper">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                        </svg>
+            <!-- CONTENT GRID -->
+            <div class="discovery-grid" style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 30px;">
+
+                <!-- COLUMN 1: Featured Colleges -->
+                <div class="disc-card" style="background: #eff6ff; padding: 25px; border-radius: 12px; height: 100%;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="font-size: 18px; font-weight: 700; color: #1e3a8a; margin: 0;">Featured Colleges</h3>
+                        <a href="#"
+                            style="font-size: 13px; color: #2563eb; font-weight: 600; text-decoration: none;">View
+                            all</a>
                     </div>
-                    <h3><span class="counter" data-target="186">0</span></h3>
-                    <p>Hours of Work / Month</p>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon-wrapper">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                            <line x1="9" y1="9" x2="9.01" y2="9" />
-                            <line x1="15" y1="9" x2="15.01" y2="9" />
-                        </svg>
+                    <div class="chip-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <span class="disc-chip"
+                            style="background: white; border: 1px solid #dbeafe; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155; cursor: pointer; transition: all 0.2s;">Parul
+                            University</span>
+                        <span class="disc-chip"
+                            style="background: white; border: 1px solid #dbeafe; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155; cursor: pointer; transition: all 0.2s;">K.
+                            R. Mangalam University</span>
+                        <span class="disc-chip"
+                            style="background: white; border: 1px solid #dbeafe; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155; cursor: pointer; transition: all 0.2s;">Chandigarh
+                            University</span>
+                        <span class="disc-chip"
+                            style="background: white; border: 1px solid #dbeafe; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155; cursor: pointer; transition: all 0.2s;">Swarnim
+                            Startup & Innovation</span>
+                        <span class="disc-chip"
+                            style="background: white; border: 1px solid #dbeafe; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155; cursor: pointer; transition: all 0.2s;">Lovely
+                            Professional University</span>
+                        <span class="disc-chip"
+                            style="background: white; border: 1px solid #dbeafe; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155; cursor: pointer; transition: all 0.2s;">Sanskriti
+                            University</span>
+                        <span class="disc-chip"
+                            style="background: white; border: 1px solid #dbeafe; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155; cursor: pointer; transition: all 0.2s;">Jaipur
+                            National University</span>
+                        <span class="disc-chip"
+                            style="background: white; border: 1px solid #dbeafe; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155; cursor: pointer; transition: all 0.2s;">Institute
+                            of Engineering</span>
                     </div>
-                    <h3><span class="counter" data-target="89">0</span></h3>
-                    <p>Satisfied Clients</p>
                 </div>
+
+                <!-- COLUMN 2: Exams & States -->
+                <div style="display: flex; flex-direction: column; gap: 30px;">
+
+                    <!-- Exams -->
+                    <div class="disc-card" style="background: #eff6ff; padding: 25px; border-radius: 12px;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="font-size: 18px; font-weight: 700; color: #1e3a8a; margin: 0;">Important Exams
+                            </h3>
+                            <a href="#"
+                                style="font-size: 13px; color: #2563eb; font-weight: 600; text-decoration: none;">View
+                                all</a>
+                        </div>
+                        <div class="chip-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="disc-chip"
+                                style="background: white; border: 1px solid #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155;">JEE
+                                Main</span>
+                            <span class="disc-chip"
+                                style="background: white; border: 1px solid #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155;">JEE
+                                Advanced</span>
+                            <span class="disc-chip"
+                                style="background: white; border: 1px solid #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155;">TS
+                                EAMCET</span>
+                            <span class="disc-chip"
+                                style="background: white; border: 1px solid #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155;">WBJEE</span>
+                            <span class="disc-chip"
+                                style="background: white; border: 1px solid #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155;">VITEEE</span>
+                        </div>
+                    </div>
+
+                    <!-- States -->
+                    <div class="disc-card"
+                        style="background: #eff6ff; padding: 25px; border-radius: 12px; flex-grow: 1;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="font-size: 18px; font-weight: 700; color: #1e3a8a; margin: 0;">Top States</h3>
+                            <a href="#"
+                                style="font-size: 13px; color: #2563eb; font-weight: 600; text-decoration: none;">View
+                                all</a>
+                        </div>
+                        <div class="chip-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="disc-chip"
+                                style="background: white; border: 1px solid #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155;">Maharashtra</span>
+                            <span class="disc-chip"
+                                style="background: white; border: 1px solid #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155;">Tamil
+                                Nadu</span>
+                            <span class="disc-chip"
+                                style="background: white; border: 1px solid #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155;">Uttar
+                                Pradesh</span>
+                            <span class="disc-chip"
+                                style="background: white; border: 1px solid #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155;">Karnataka</span>
+                            <span class="disc-chip"
+                                style="background: white; border: 1px solid #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155;">Rajasthan</span>
+                            <span class="disc-chip"
+                                style="background: white; border: 1px solid #dbeafe; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: #334155;">Punjab</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 3: Related Courses -->
+                <div class="disc-card" style="background: #eff6ff; padding: 25px; border-radius: 12px; height: 100%;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="font-size: 18px; font-weight: 700; color: #1e3a8a; margin: 0;">Related Courses</h3>
+                        <a href="course.html?type=btech"
+                            style="font-size: 13px; color: #2563eb; font-weight: 600; text-decoration: none;">View
+                            all</a>
+                    </div>
+                    <div class="list-container" style="display: flex; flex-direction: column; gap: 10px;">
+                        <a href="course.html?type=btech"
+                            style="background: white; padding: 12px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; color: #334155; text-decoration:none; border: 1px solid #dbeafe; transition:all 0.2s; display:block;">Mechanical
+                            Engineering</a>
+                        <a href="course.html?type=btech"
+                            style="background: white; padding: 12px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; color: #334155; text-decoration:none; border: 1px solid #dbeafe; transition:all 0.2s; display:block;">Automobile
+                            Engineering</a>
+                        <a href="course.html?type=btech"
+                            style="background: white; padding: 12px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; color: #334155; text-decoration:none; border: 1px solid #dbeafe; transition:all 0.2s; display:block;">Aerospace
+                            Engineering</a>
+                        <a href="course.html?type=btech"
+                            style="background: white; padding: 12px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; color: #334155; text-decoration:none; border: 1px solid #dbeafe; transition:all 0.2s; display:block;">Aeronautical
+                            Engineering</a>
+                        <a href="course.html?type=btech"
+                            style="background: white; padding: 12px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; color: #334155; text-decoration:none; border: 1px solid #dbeafe; transition:all 0.2s; display:block;">Software
+                            Engineering</a>
+                        <a href="course.html?type=btech"
+                            style="background: white; padding: 12px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; color: #334155; text-decoration:none; border: 1px solid #dbeafe; transition:all 0.2s; display:block;">Computer
+                            Engineering</a>
+                    </div>
+                </div>
+
             </div>
+
+            <script>
+                function switchDiscTab(el, tab) {
+                    // Visual Toggle
+                    document.querySelectorAll('.disc-tab').forEach(t => {
+                        t.style.color = '#64748b';
+                        t.style.borderColor = 'transparent';
+                    });
+                    el.style.color = '#f59e0b';
+                    el.style.borderColor = '#f59e0b';
+
+                    // Logic to change content could go here
+                    // For now, static content as per Engineering view in image
+                }
+            </script>
         </div>
     </section>
 
-    <!-- FREE COURSES PROMO & STATS SECTION -->
-    <section class="promo-section">
-        <div class="promo-overlay"></div>
-        <div class="promo-content">
-            <h2>GET 100 COURSES FOR <span class="highlight-red">FREE</span></h2>
-            <p class="promo-desc">
-                Tech you how to build a complete learning management system upcoming education for student
-            </p>
-            <div class="promo-subtitle">WE'RE GOOD AT SOME MEMBER</div>
+    <!-- UNLOCK FUTURE / FREE COUNSELLING BANNER -->
+    <section class="unlock-future-section"
+        style="background: linear-gradient(90deg, #a9b7d7 0%, #a6b6d0 100%); padding: 50px 0; position: relative; overflow: hidden;">
+        <div class="container"
+            style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2;">
 
-            <div class="promo-stats-grid">
-                <!-- Stat 1 -->
-                <div class="promo-stat-item">
-                    <div class="promo-icon">
-                        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"
-                            viewBox="0 0 24 24">
-                            <path d="M20 7h-9" />
-                            <path d="M14 17H5" />
-                            <circle cx="17" cy="17" r="3" />
-                            <circle cx="7" cy="7" r="3" />
-                        </svg>
-                    </div>
-                    <div class="promo-label">CERTIFIED TEACHERS</div>
-                    <div class="promo-value"><span class="counter" data-target="117">0</span></div>
-                </div>
-
-                <!-- Stat 2 -->
-                <div class="promo-stat-item">
-                    <div class="promo-icon">
-                        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"
-                            viewBox="0 0 24 24">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                    </div>
-                    <div class="promo-label">COURSES COMPLETE</div>
-                    <div class="promo-value"><span class="counter" data-target="12456">0</span></div>
-                </div>
-
-                <!-- Stat 3 -->
-                <div class="promo-stat-item">
-                    <div class="promo-icon">
-                        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"
-                            viewBox="0 0 24 24">
-                            <path d="M10 2v7.31" />
-                            <path d="M14 9.3V1.99" />
-                            <path d="M8.5 2h7" />
-                            <path d="M14 9.3a6.5 6.5 0 1 1-4 0" />
-                            <path d="M5.52 16h12.96" />
-                        </svg>
-                    </div>
-                    <div class="promo-label">STUDENTS ENROLLED</div>
-                    <div class="promo-value"><span class="counter" data-target="220234">0</span></div>
-                </div>
-
-                <!-- Stat 4 -->
-                <div class="promo-stat-item">
-                    <div class="promo-icon">
-                        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"
-                            viewBox="0 0 24 24">
-                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                            <polyline points="10 8 13 11 16 8" />
-                        </svg>
-                    </div>
-                    <div class="promo-label">STUDENTS ENROLLED</div>
-                    <div class="promo-value"><span class="counter" data-target="100">0</span>%</div>
-                </div>
-
+            <!-- Left Text Content -->
+            <div style="flex: 1; min-width: 300px;">
+                <h2 style="font-size: 24px; color: #cbd5e1; font-weight: 500; margin-bottom: 5px;">Unlock Your <span
+                        style="font-weight: 800; color:#fbbf24;">Future</span> with</h2>
+                <div style="font-size: 48px; font-weight: 800; color: #ffffff; line-height: 1.1; margin-bottom: 10px;">
+                    Online Degrees</div>
+                <div style="font-size: 24px; color: #cbd5e1; font-weight: 600;">from <span
+                        style="font-weight: 800; color:#fbbf24;">Top
+                        Universities!</span></div>
             </div>
+
+            <!-- Right Info & Button -->
+            <div
+                style="flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 40px; flex-wrap: wrap;">
+
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div
+                        style="display: flex; align-items: center; gap: 8px; font-weight: 600; color: white; font-size: 14px;">
+                        <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">🎓</span>
+                        <span>100% Online</span> <span style="font-weight: 400; opacity: 0.7; color:#94a3b8;">| Flexible
+                            Learning
+                            Schedules</span>
+                    </div>
+                    <div
+                        style="display: flex; align-items: center; gap: 8px; font-weight: 600; color: white; font-size: 14px;">
+                        <span style="background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px;">🏅</span>
+                        <span>Govt. & UGC</span> <span style="font-weight: 400; opacity: 0.7; color:#94a3b8;">Approved
+                            Programs</span>
+                    </div>
+                </div>
+
+                <a href="#" class="counselling-btn" onclick="openContactModal(event)"
+                    style="background: #fbbf24; color: #0f172a; font-weight: 700; padding: 15px 30px; border-radius: 6px; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s;">
+                    Get Free Counselling
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Decorative background circles for visual flair matching reference -->
+        <div
+            style="position: absolute; bottom: -50px; left: 20%; width: 200px; height: 100px; background: rgba(255,255,255,0.03); border-radius: 100px 100px 0 0;">
+        </div>
+        <div
+            style="position: absolute; bottom: -80px; right: 20%; width: 300px; height: 150px; background: rgba(255,255,255,0.03); border-radius: 150px 150px 0 0;">
         </div>
     </section>
 
@@ -2209,67 +2522,285 @@
         });
     </script>
 
-    <!-- CONTACT MODAL FALLBACK FOR STATIC PREVIEW -->
-    <div id="contactModal" class="modal-overlay" onclick="closeContactModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="close-modal-btn" onclick="closeContactModal(event)">✕</button>
-            <div class="contact-info-side">
-                <h2>Neuraltrix AI</h2>
-                <div class="info-item">
-                    <div class="info-icon">📍</div>
-                    <div class="info-text">
-                        <h4>Location</h4>
-                        <p>VFSTR, N block, Guntur,<br>Andhra Pradesh, India</p>
+    <!-- MEGA MENU POPUP STRUCTURE -->
+    <div id="megaMenuWrapper" style="position:absolute; width:100%; left:0; top:72px;">
+        <div id="megaMenuPopup" class="mega-menu-popup">
+            <button class="close-mega-btn" onclick="toggleMegaMenu()">×</button>
+
+            <!-- SIDEBAR -->
+            <aside class="mega-sidebar">
+                <ul>
+                    <li><a href="#" class="active">Engineering <span>▶</span></a></li>
+                    <li><a href="#">Management <span>▶</span></a></li>
+                    <li><a href="#">Commerce & Banking <span>▶</span></a></li>
+                    <li><a href="#">Medical <span>▶</span></a></li>
+                    <li><a href="#">Sciences <span>▶</span></a></li>
+                    <li><a href="#">Hotel Management <span>▶</span></a></li>
+                    <li><a href="#">Information Tech <span>▶</span></a></li>
+                    <li><a href="#">Arts & Humanities <span>▶</span></a></li>
+                </ul>
+            </aside>
+
+            <!-- CONTENT -->
+            <div class="mega-content">
+                <!-- COL 1 -->
+                <div class="col-group">
+                    <h3>Colleges By Degrees</h3>
+                    <ul>
+                        <li><a href="listing.html?type=btech">B.Tech Colleges</a></li>
+                        <li><a href="listing.html?type=mtech">M.Tech Colleges</a></li>
+                        <li><a href="listing.html?type=bca">BCA Colleges</a></li>
+                        <li><a href="listing.html?type=mca">MCA Colleges</a></li>
+                        <li><a href="listing.html?type=btech">BE Colleges</a></li>
+                    </ul>
+                    <a href="listing.html?type=btech" class="view-all-btn"
+                        style="color:#d97706; border:1px solid #d97706; padding:4px 8px; border-radius:4px; font-size:12px; display:inline-block; margin-top:5px; text-decoration:none;">View
+                        All ↗</a>
+                </div>
+
+                <!-- COL 2 -->
+                <div class="col-group">
+                    <h3>Popular Colleges</h3>
+                    <ul>
+                        <li><a href="college.html?id=sanskriti">Sanskriti University</a></li>
+                        <li><a href="college.html?id=gniot">GNIOT Group</a></li>
+                        <li><a href="college.html?id=parul">Parul University</a></li>
+                        <li><a href="college.html?id=sanjay">Sanjay Ghodawat</a></li>
+                        <li><a href="college.html?id=amity">Amity Punjab</a></li>
+                    </ul>
+                </div>
+
+                <!-- COL 3 -->
+                <div class="col-group">
+                    <h3>Top Colleges</h3>
+                    <ul>
+                        <li><a href="college.html?id=iitkgp">IIT Kharagpur</a></li>
+                        <li><a href="college.html?id=iitd">IIT Delhi</a></li>
+                        <li><a href="college.html?id=iitm">IIT Madras</a></li>
+                        <li><a href="college.html?id=iitk">IIT Kanpur</a></li>
+                        <li><a href="college.html?id=iitr">IIT Roorkee</a></li>
+                    </ul>
+                    <a href="listing.html?type=all" class="view-all-btn"
+                        style="color:#d97706; border:1px solid #d97706; padding:4px 8px; border-radius:4px; font-size:12px; display:inline-block; margin-top:5px; text-decoration:none;">View
+                        All ↗</a>
+                </div>
+
+                <!-- COL 4 -->
+                <div class="col-group">
+                    <div
+                        style="background: #fff7ed; padding: 20px; border-radius: 10px; border: 1px solid #fed7aa; text-align: center;">
+                        <h4 style="color:#c2410c; margin-bottom:10px;">Admission 2026</h4>
+                        <p style="font-size:12px; color:#9a3412; margin-bottom:15px;">Apply to India's top ranking
+                            universities today.</p>
+                        <button
+                            style="background:#ea580c; color:white; border:none; padding:6px 14px; border-radius:4px; font-weight:600; cursor:pointer;">Apply
+                            Now</button>
                     </div>
                 </div>
-                <div class="info-item">
-                    <div class="info-icon">📧</div>
-                    <div class="info-text">
-                        <h4>Email Us</h4>
-                        <p>info@neuraltrixai.com</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">📞</div>
-                    <div class="info-text">
-                        <h4>Call Us</h4>
-                        <p>+91 8142438759</p>
-                    </div>
-                </div>
-            </div>
-            <div class="contact-form-side">
-                <h3>Reach Us</h3>
-                <p>Tell us how we can help you grow.</p>
-                <form onsubmit="alert('Sent! (Static Preview Mode)'); closeContactModal(); return false;">
-                    <div class="input-group">
-                        <label>Name</label>
-                        <input type="text" placeholder="Your Name" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Email</label>
-                        <input type="email" placeholder="you@example.com" required>
-                    </div>
-                    <div class="input-group">
-                        <label>What's on your mind?</label>
-                        <textarea placeholder="Write your message here..." rows="4" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn" style="width: 100%; margin-top: 10px;">Send
-                        Message</button>
-                </form>
             </div>
         </div>
-    </div>
+        <!-- CAREERS MEGA MENU POPUP -->
+        <div id="careersMenuWrapper" style="position:absolute; width:100%; left:0; top:72px;">
+            <div id="careersMenuPopup" class="mega-menu-popup" style="height: auto; padding-bottom: 30px;">
+                <button class="close-mega-btn" onclick="toggleCareersMenu()">×</button>
 
-    <script>
-        function openContactModal(e) {
-            if (e) e.preventDefault();
-            document.getElementById('contactModal').classList.add('show');
-        }
-        function closeContactModal(e) {
-            if (e && e.target !== e.currentTarget && !e.target.classList.contains('close-modal-btn')) return;
-            document.getElementById('contactModal').classList.remove('show');
-        }
-    </script>
+                <div style="padding: 30px; width: 100%;">
+                    <h3
+                        style="font-size: 18px; font-weight: 700; color: #1e1b4b; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 20px;">
+                        Popular Careers</h3>
+
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+                        <!-- Col 1 -->
+                        <ul style="list-style:none; padding:0;">
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=ias"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">IAS
+                                    Officer</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=police"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Police
+                                    Officer</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=doctor"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Doctor</a>
+                            </li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=cid"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">CID
+                                    Officer</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=ifs"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">IFS
+                                    Officer</a></li>
+                        </ul>
+
+                        <!-- Col 2 -->
+                        <ul style="list-style:none; padding:0;">
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=pilot"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Pilot</a>
+                            </li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=veterinarian"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Veterinarian</a>
+                            </li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=army"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Army
+                                    Officer</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=fashion"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Fashion
+                                    Designer</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=airforce"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Air
+                                    Force Officer</a></li>
+                        </ul>
+
+                        <!-- Col 3 -->
+                        <ul style="list-style:none; padding:0;">
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=cs"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Company
+                                    Secretary CS</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=locopilot"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Loco
+                                    Pilot</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=ca"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Just
+                                    Chartered Accountant</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=crpf"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">CRPF
+                                    Officer</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=merchantnavy"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Merchant
+                                    Navy</a></li>
+                        </ul>
+
+                        <!-- Col 4 -->
+                        <ul style="list-style:none; padding:0;">
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=druginspector"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Drug
+                                    Inspector</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=investbanker"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Investment
+                                    Banker</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=probationary"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Probationary
+                                    Officer</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=atc"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Air
+                                    Traffic Controller</a></li>
+                            <li style="margin-bottom:10px;"><a href="career-detail.html?id=narcotics"
+                                    style="color:#64748b; text-decoration:none; font-size:14px; font-weight:500;">Narcotics
+                                    Officer</a></li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-top: 30px; border-top: 1px solid #f1f5f9; padding-top: 15px;">
+                        <a href="careers.html"
+                            style="color:#2563eb; font-weight:600; text-decoration:none; font-size:14px;">View All
+                            Careers →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Mega Menu Toggle Logic
+            function toggleMegaMenu() {
+                const popup = document.getElementById('megaMenuPopup');
+                popup.classList.toggle('active');
+
+                // Close careers if open
+                const careers = document.getElementById('careersMenuPopup');
+                if (careers && careers.classList.contains('active')) careers.classList.remove('active');
+            }
+
+            function toggleCareersMenu() {
+                const popup = document.getElementById('careersMenuPopup');
+                popup.classList.toggle('active');
+
+                // Close colleges if open
+                const mega = document.getElementById('megaMenuPopup');
+                if (mega && mega.classList.contains('active')) mega.classList.remove('active');
+            }
+
+            // Close if clicked outside
+            document.addEventListener('click', function (e) {
+                // Mega Menu
+                const mega = document.getElementById('megaMenuPopup');
+                const megaLink = document.querySelector('a[onclick*="toggleMegaMenu"]');
+
+                // Careers Menu
+                const careers = document.getElementById('careersMenuPopup');
+                const careersLink = document.querySelector('a[onclick*="toggleCareersMenu"]');
+
+                if (mega && mega.classList.contains('active')) {
+                    if (!mega.contains(e.target) && e.target !== megaLink && (!megaLink || !megaLink.contains(e.target))) {
+                        mega.classList.remove('active');
+                    }
+                }
+
+                if (careers && careers.classList.contains('active')) {
+                    if (!careers.contains(e.target) && e.target !== careersLink && (!careersLink || !careersLink.contains(e.target))) {
+                        careers.classList.remove('active');
+                    }
+                }
+            });
+        </script>
+
+        <!-- CONTACT MODAL FALLBACK FOR STATIC PREVIEW -->
+        <div id="contactModal" class="modal-overlay" onclick="closeContactModal(event)">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <button class="close-modal-btn" onclick="closeContactModal(event)">✕</button>
+                <div class="contact-info-side">
+                    <h2>Neuraltrix AI</h2>
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-text">
+                            <h4>Location</h4>
+                            <p>VFSTR, N block, Guntur,<br>Andhra Pradesh, India</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📧</div>
+                        <div class="info-text">
+                            <h4>Email Us</h4>
+                            <p>info@neuraltrixai.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div class="info-text">
+                            <h4>Call Us</h4>
+                            <p>+91 8142438759</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-side">
+                    <h3>Reach Us</h3>
+                    <p>Tell us how we can help you grow.</p>
+                    <form onsubmit="alert('Sent! (Static Preview Mode)'); closeContactModal(); return false;">
+                        <div class="input-group">
+                            <label>Name</label>
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="you@example.com" required>
+                        </div>
+                        <div class="input-group">
+                            <label>What's on your mind?</label>
+                            <textarea placeholder="Write your message here..." rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn" style="width: 100%; margin-top: 10px;">Send
+                            Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function openContactModal(e) {
+                if (e) e.preventDefault();
+                document.getElementById('contactModal').classList.add('show');
+            }
+            function closeContactModal(e) {
+                if (e && e.target !== e.currentTarget && !e.target.classList.contains('close-modal-btn')) return;
+                document.getElementById('contactModal').classList.remove('show');
+            }
+        </script>
 </body>
 
 </html>

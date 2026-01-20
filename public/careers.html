@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Careers | EduMon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e1b4b;
+            /* Dark Navy similar to reference header */
+            --accent: #4f46e5;
+            /* Blue for buttons */
+            --bg-light: #f3f4f6;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #1e293b;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--primary);
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            color: white;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #cbd5e1;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* BANNER SECTION */
+        .career-banner {
+            width: 100%;
+            height: 350px;
+            /* Placeholder for the "CAREER" graphic and people on stairs */
+            background: url('https://img.freepik.com/free-vector/career-ladder-concept-illustration_114360-10022.jpg?w=1800&t=st=1705750000~exp=1705750600~hmac=abc') no-repeat center center/cover;
+            /* Using a generic career illustration as placeholder since I can't see the exact uploaded image URL to copy */
+            position: relative;
+            background-color: #f0f9ff;
+        }
+
+        /* SEARCH SECTION */
+        .search-section {
+            background: #f8fafc;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .search-section h2 {
+            font-size: 28px;
+            color: #0f172a;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .search-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .search-wrapper input {
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            padding: 15px 20px;
+            font-size: 16px;
+            outline: none;
+            border-right: none;
+        }
+
+        .search-wrapper button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0 30px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* CARD GRID SECTION */
+        .careers-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .career-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+        }
+
+        .career-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img {
+            height: 180px;
+            overflow: hidden;
+            background: #eee;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .card-sub {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="brand" onclick="window.location.href='index.html'">EduMon</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Colleges</a></li>
+                <li><a href="#">Exams</a></li>
+                <li><a href="course.html?type=default">Courses</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- BANNER -->
+    <div class="career-banner">
+        <!-- Background image handled in CSS -->
+    </div>
+
+    <!-- SEARCH -->
+    <section class="search-section">
+        <h2>What career are you looking for ?</h2>
+        <div class="search-wrapper">
+            <input type="text" id="careerSearch" placeholder="Search for careers (e.g. Pilot, Doctor)..."
+                onkeyup="filterCareers()">
+            <button onclick="filterCareers()">Search</button>
+        </div>
+    </section>
+
+    <!-- GRID -->
+    <div class="careers-container">
+        <div class="career-grid" id="careerGrid">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <script>
+        const allCareers = [
+            { name: 'IAS Officer', cat: 'Government', img: 'https://img.freepik.com/free-vector/government-officer-concept-illustration_114360-15632.jpg' },
+            { name: 'Pilot', cat: 'Aviation', img: 'https://img.freepik.com/free-vector/pilot-concept-illustration_114360-2216.jpg' },
+            { name: 'Doctor', cat: 'Medical', img: 'https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg' },
+            { name: 'Lawyer', cat: 'Legal', img: 'https://img.freepik.com/free-vector/law-firm-concept-illustration_114360-1430.jpg' },
+            { name: 'Software Engineer', cat: 'Technology', img: 'https://img.freepik.com/free-vector/programmer-concept-illustration_114360-2417.jpg' },
+            { name: 'Fashion Designer', cat: 'Creative', img: 'https://img.freepik.com/free-vector/clothing-designer-concept-illustration_114360-2722.jpg' },
+            { name: 'Architecture', cat: 'Construction', img: 'https://img.freepik.com/free-vector/architect-concept-illustration_114360-2746.jpg' },
+            { name: 'Agriculture', cat: 'Farming', img: 'https://img.freepik.com/free-vector/farmer-concept-illustration_114360-2646.jpg' }
+        ];
+
+        const grid = document.getElementById('careerGrid');
+
+        function renderCareers(list) {
+            grid.innerHTML = list.map(item => `
+                <div class="career-card" onclick="window.location.href='career-detail.html?id=${item.name}'">
+                    <div class="card-img">
+                         <img src="${item.img}" alt="${item.name}">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">${item.name}</div>
+                        <div class="card-sub">${item.cat}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCareers() {
+            const query = document.getElementById('careerSearch').value.toLowerCase();
+            const filtered = allCareers.filter(c => c.name.toLowerCase().includes(query));
+            renderCareers(filtered);
+        }
+
+        // Initial Render
+        renderCareers(allCareers);
+
+    </script>
+</body>
+
+</html>

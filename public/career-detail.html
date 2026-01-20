@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Details | EduMon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            /* Blue */
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-page: #f8fafc;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-dark);
+        }
+
+        /* HEADER */
+        header {
+            background: #1e1b4b;
+            /* Dark Navy */
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+            cursor: pointer;
+        }
+
+        .back-btn {
+            color: #dbeafe;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            color: white;
+        }
+
+        /* MAIN LAYOUT */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+            gap: 40px;
+            align-items: start;
+            margin-bottom: 80px;
+            /* Space for bottom bar */
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 90px;
+            /* Header height + margin */
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            background: white;
+            padding: 15px;
+            font-size: 12px;
+            color: var(--text-light);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--primary);
+            background: #eff6ff;
+            font-weight: 600;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* CONTENT AREA */
+        .content-area {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            min-height: 500px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e1b4b;
+            margin: 0;
+        }
+
+        .follow-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .follow-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* SECTIONS */
+        .section-block {
+            margin-bottom: 40px;
+            scroll-margin-top: 100px;
+            /* Offset for sticky header */
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e1b4b;
+            margin-bottom: 15px;
+        }
+
+        .section-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #334155;
+            margin-bottom: 15px;
+        }
+
+        .highlight-box {
+            background: #fdf2f8;
+            border-left: 4px solid #db2777;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #831843;
+        }
+
+        .career-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        /* BOTTOM EXPERT BAR */
+        .bottom-expert-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+            z-index: 999;
+        }
+
+        .expert-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .expert-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="brand" onclick="window.location.href='index.html'">EduMon</div>
+        <a href="careers.html" class="back-btn">← Back to All Careers</a>
+    </header>
+
+    <div class="container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header" id="lastUpdated">
+                Last Updated: 20 Jan, 2026
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="scrollToSection('about', this)">About</li>
+                <li class="nav-item" onclick="scrollToSection('eligibility', this)">Eligibility</li>
+                <li class="nav-item" onclick="scrollToSection('roles', this)">Job Roles</li>
+                <li class="nav-item" onclick="scrollToSection('salary', this)">Salary</li>
+                <li class="nav-item" onclick="scrollToSection('pros', this)">Pros & Cons</li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="content-area">
+            <div class="page-header">
+                <h1 class="page-title" id="pageTitle">How to Become a Pilot</h1>
+                <button class="follow-btn">Follow</button>
+            </div>
+
+            <!-- ABOUT SECTION -->
+            <div id="about" class="section-block">
+                <h2 class="section-title" id="aboutTitle">About Pilot</h2>
+                <div class="section-text" id="aboutText">
+                    <!-- Loaded dynamically -->
+                </div>
+
+                <h3 class="section-title">Who is a <span id="roleName">Pilot</span>?</h3>
+                <div class="section-text" id="whoIsText">
+                    <!-- Loaded dynamically -->
+                </div>
+
+                <img src="" alt="Career Image" class="career-img" id="careerImage">
+            </div>
+
+            <!-- ELIGIBILITY SECTION -->
+            <div id="eligibility" class="section-block">
+                <h2 class="section-title">Eligibility Criteria</h2>
+                <div class="section-text" id="eligibilityText">
+                    To pursue this career, you typically need to complete specific educational requirements and clear
+                    entrance examinations.
+                    <br><br>
+                    <strong>Key Requirements:</strong>
+                    <ul style="margin-top:10px; padding-left:20px;">
+                        <li>Minimum Age: 17 Years</li>
+                        <li>Education: 10+2 with Physics and Maths</li>
+                        <li>Medical Fitness: Class I Medical Certificate</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- JOB ROLES -->
+            <div id="roles" class="section-block">
+                <h2 class="section-title">Key Job Roles</h2>
+                <div class="section-text">
+                    This career path offers various specialized roles depending on your expertise and experience level.
+                </div>
+                <div class="highlight-box" id="rolesList">
+                    <!-- Loaded JS -->
+                </div>
+            </div>
+
+            <!-- SALARY -->
+            <div id="salary" class="section-block">
+                <h2 class="section-title">Salary Trends</h2>
+                <div class="section-text">
+                    The salary varies significantly based on experience, location, and the specific organization. Below
+                    are the estimated ranges.
+                </div>
+                <div id="salaryGrid"
+                    style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px; margin-top:20px;">
+                    <!-- Loaded JS -->
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- BOTTOM HELP BAR -->
+    <div class="bottom-expert-bar">
+        <span class="expert-text">Confused on what to choose as your career?</span>
+        <button class="expert-btn" onclick="alert('Opening Expert Chat...')">Get Expert Help</button>
+    </div>
+
+    <script>
+        const careersDB = {
+            'IAS Officer': {
+                title: 'How to Become an IAS Officer',
+                name: 'IAS Officer',
+                about: 'The Indian Administrative Service (IAS) is the premier administrative civil service of the Government of India. IAS officers hold key relationships positions in the Union Government, State Governments, and Public Sector Undertakings. They are responsible for implementing government policies and overseeing public administration.',
+                whoIs: 'An IAS officer is a high-ranking government official responsible for maintaining law and order, collecting revenue, and implementing developmental policies in their jurisdiction.',
+                img: 'https://img.freepik.com/free-vector/government-officer-concept-illustration_114360-15632.jpg',
+                roles: ['Sub-Divisional Magistrate (SDM)', 'District Magistrate (DM)', 'Cabinet Secretary', 'Principal Secretary'],
+                salary: [
+                    { level: 'Entry', val: '₹56,100/mo' },
+                    { level: 'Mid', val: '₹78,800/mo' },
+                    { level: 'Senior', val: '₹2,50,000/mo' }
+                ]
+            },
+            'Pilot': {
+                title: 'How to Become a Pilot',
+                name: 'Pilot',
+                about: 'Pilots are trained professionals who steer and fly airplanes and other types of aircraft. They remain the backbone of the aviation industry. Pilots are responsible for flying passengers and goods from one location to another. From performing pre and post-flight aircraft assessments to managing the cockpit.',
+                whoIs: 'A pilot is an experienced aviator who controls and navigates aircraft. Pilots are in charge of ensuring the safe and efficient transfer of people, cargo, or both.',
+                img: 'https://img.freepik.com/free-vector/pilot-concept-illustration_114360-2216.jpg',
+                roles: ['Commercial Pilot', 'Cargo Pilot', 'Private Jet Pilot', 'Air Force Pilot'],
+                salary: [
+                    { level: 'First Officer', val: '₹1.5 Lakh/mo' },
+                    { level: 'Captain', val: '₹5 Lakh/mo' },
+                    { level: 'Senior Commander', val: '₹10 Lakh/mo' }
+                ]
+            },
+            'Doctor': {
+                title: 'How to Become a Doctor',
+                name: 'Doctor',
+                about: 'Doctors diagnosis and treat illnesses, injuries, and other health conditions. They work in hospitals, clinics, private practice, and public health organizations. The path requires dedication, long hours of study, and a passion for helping others.',
+                whoIs: 'A doctor is a qualified medical professional who practices medicine, which involves sustaining or restoring human health through the study, diagnosis, and treatment of disease and injury.',
+                img: 'https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg',
+                roles: ['General Physician', 'Surgeon', 'Cardiologist', 'Neurologist'],
+                salary: [
+                    { level: 'Intern', val: '₹30,000/mo' },
+                    { level: 'Resident', val: '₹80,000/mo' },
+                    { level: 'Specialist', val: '₹2 Lakh+/mo' }
+                ]
+            }
+        };
+
+        // LOAD DATA
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        const data = careersDB[id] || careersDB['Pilot']; // Default to Pilot for demo if ID missing
+
+        // Populate Headers
+        document.getElementById('pageTitle').textContent = data.title;
+        document.getElementById('aboutTitle').textContent = `About ${data.name}`;
+        document.getElementById('roleName').textContent = data.name;
+        document.getElementById('aboutText').textContent = data.about;
+        document.getElementById('whoIsText').textContent = data.whoIs;
+        document.getElementById('careerImage').src = data.img;
+
+        // Populate Roles
+        document.getElementById('rolesList').innerHTML = data.roles.map(r => `• ${r}`).join('<br>');
+
+        // Populate Salary
+        document.getElementById('salaryGrid').innerHTML = data.salary.map(s => `
+            <div style="background:#f1f5f9; padding:15px; border-radius:6px; text-align:center;">
+                <div style="font-size:12px; color:#64748b; margin-bottom:5px;">${s.level} Level</div>
+                <div style="font-weight:700; color:#1e1b4b; font-size:16px;">${s.val}</div>
+            </div>
+        `).join('');
+
+
+        // SCROLL LOGIC
+        function scrollToSection(id, el) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Update Active State
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+    </script>
+</body>
+
+</html>
